@@ -29,7 +29,11 @@ func parseCmd() *Cmd {
 	args := flag.Args()
 	if len(args) > 0 {
 		cmd.class = args[0]
-		cmd.args = args[1:]
+		if len(args) == 1 {
+			cmd.args = args[:]
+		} else {
+			cmd.args = args[1:]
+		}
 	}
 	return cmd
 }
