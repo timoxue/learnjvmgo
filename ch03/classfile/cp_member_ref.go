@@ -6,7 +6,7 @@ type ConstantMemberrefInfo struct {
 	nameAndTypeIndex uint16
 }
 
-func (this *ContantMemberrefInfo) readInfo(reader *ClassReader) {
+func (this *ConstantMemberrefInfo) readInfo(reader *ClassReader) {
 	this.classIndex = reader.readUint16()
 	this.nameAndTypeIndex = reader.readUint16()
 }

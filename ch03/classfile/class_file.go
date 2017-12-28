@@ -12,7 +12,7 @@ type ClassFile struct {
 	thisClass    uint16
 	superClass   uint16
 	interfaces   []uint16
-	fields       []*Memberinfo
+	fields       []*MemberInfo
 	methods      []*MemberInfo
 	attributes   []AttributeInfo
 }
@@ -46,9 +46,55 @@ func (cf *ClassFile) read(reader *ClassReader) {
 	cf.attributes = readAttributes(reader, cf.constantPool)
 }
 
+func (cf *ClassFile) readAndCheckMagic(reader *ClassReader) {
+	magic := reader.readUnit32()
+	if magic != 0xCAFEBABE {
+		panic("java.lang.ClassFormatError: magic!")
+	}
+}
+
+func (cf *ClassFile) readAndCheckVersion(reader *ClassReader) {
+	cf.minorVersion = reader.readUint16()
+	cf.majorVersion = reader.readUint16()
+	switch cf.majorVersion {
+	case 45:
+		return
+	case 46, 47, 48, 49, 50, 51, 52:
+		if cf.minorVersion == 0 {
+			return
+		}
+	}
+	panic("java.lang.UnsupportedClassVersionError!")
+}
+
+//MinorVersion #
+func (cf *ClassFile) MinorVersion() uint16 {
+	return cf.minorVersion
+}
+
 //MajorVersion getter => get the major version of the class file
 func (cf *ClassFile) MajorVersion() uint16 {
 	return cf.majorVersion
+}
+
+//ConstantPool #
+func (cf *ClassFile) ConstantPool() ConstantPool {
+	return cf.constantPool
+}
+
+//AccessFlags #
+func (cf *ClassFile) AccessFlags() uint16 {
+	return cf.accessFlags
+}
+
+//Fields *
+func (cf *ClassFile) Fields() []*MemberInfo {
+	return cf.fields
+}
+
+//Methods #
+func (cf *ClassFile) Methods() []*MemberInfo {
+	return cf.methods
 }
 
 //ClassName getter => get class name
@@ -68,25 +114,4 @@ func (cf *ClassFile) InterfaceNames() []string {
 		interfaceNames[i] = cf.constantPool.getClassName(cpIndex)
 	}
 	return interfaceNames
-}
-
-func (cf *ClassFile) readAndCheckMagic(reader *ClassReader) {
-	magic := reader.readUnit32()
-	if magic != 0xCAFEBABE {
-		panic("java.lang.ClassFormatError: magic!")
-	}
-}
-
-func (cf *ClassFile) readAndCheckVersion(reader *ClassReader) {
-	cf.minorVersion = reader.readUint16()
-	cf.majorVersion = reader.readUint16()
-	switch majorVersion {
-	case 45:
-		return
-	case 46, 47, 48, 49, 50, 51, 52:
-		if cf.minorVersion == 0 {
-			return
-		}
-	}
-	panic("java.lang.UnsupportedClassVersionError!")
 }
