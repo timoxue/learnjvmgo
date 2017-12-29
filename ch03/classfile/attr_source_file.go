@@ -1,14 +1,16 @@
 package classfile
 
+//SourceFileAttribute #
 type SourceFileAttribute struct {
 	cp              ConstantPool
 	sourceFileIndex uint16
 }
 
-func (this *SourceFileAttribute) readInfo(reader *ClassReader) {
-	this.sourceFileIndex = reader.readUint16()
+func (sfa *SourceFileAttribute) readInfo(reader *ClassReader) {
+	sfa.sourceFileIndex = reader.readUint16()
 }
 
-func (this *SourceFileAttribute) FileName() string {
-	return this.cp.getUtf8(this.sourceFileIndex)
+//FileName #
+func (sfa *SourceFileAttribute) FileName() string {
+	return sfa.cp.getUtf8(sfa.sourceFileIndex)
 }

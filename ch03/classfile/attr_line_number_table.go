@@ -1,9 +1,11 @@
 package classfile
 
+//LineNumberTableAttribute #
 type LineNumberTableAttribute struct {
 	lineNumberTable []*LineNumberTableEntry
 }
 
+//LineNumberTableEntry #
 type LineNumberTableEntry struct {
 	startPc    uint16
 	lineNumber uint16

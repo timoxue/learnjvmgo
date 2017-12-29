@@ -1,13 +1,15 @@
 package classfile
 
+//ConstantValueAttribute #
 type ConstantValueAttribute struct {
 	constantValueIndex uint16
 }
 
-func (this *ConstantValueAttribute) readInfo(reader *ClassReader) {
-	this.constantValueIndex = reader.readUint16()
+func (cva *ConstantValueAttribute) readInfo(reader *ClassReader) {
+	cva.constantValueIndex = reader.readUint16()
 }
 
-func (this *ConstantValueAttribute) ConstantValueIndex() uint16 {
-	return this.constantValueIndex
+//ConstantValueIndex #
+func (cva *ConstantValueAttribute) ConstantValueIndex() uint16 {
+	return cva.constantValueIndex
 }

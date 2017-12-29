@@ -1,5 +1,6 @@
 package classfile
 
+//AttributeInfo #
 type AttributeInfo interface {
 	readInfo(reader *ClassReader)
 }

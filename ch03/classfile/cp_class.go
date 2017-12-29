@@ -1,14 +1,16 @@
 package classfile
 
+//ConstantClassInfo #
 type ConstantClassInfo struct {
 	cp        ConstantPool
 	nameIndex uint16
 }
 
-func (this *ConstantClassInfo) readInfo(reader *ClassReader) {
-	this.nameIndex = reader.readeUint16()
+func (cci *ConstantClassInfo) readInfo(reader *ClassReader) {
+	cci.nameIndex = reader.readUint16()
 }
 
-func (this *ConstantClassInfo) Name() string {
-	return this.cp.getUtf8(this.nameIndex)
+//Name #
+func (cci *ConstantClassInfo) Name() string {
+	return cci.cp.getUtf8(cci.nameIndex)
 }

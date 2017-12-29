@@ -3,6 +3,7 @@ package classfile
 //ConstantPool contains the constant information of the class
 type ConstantPool []ConstantInfo
 
+//ConstantInfo #
 type ConstantInfo interface {
 	readInfo(reader *ClassReader)
 }
@@ -16,33 +17,33 @@ func readConstantInfo(reader *ClassReader, cp ConstantPool) ConstantInfo {
 
 func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
 	switch tag {
-	case CONSTANT_Integer:
+	case CONSTANTInteger:
 		return &ConstantIntegerInfo{}
-	case CONSTANT_Float:
+	case CONSTANTFloat:
 		return &ConstantFloatInfo{}
-	case CONSTANT_Long:
+	case CONSTANTLong:
 		return &ConstantLongInfo{}
-	case CONSTANT_Double:
+	case CONSTANTDouble:
 		return &ConstantDoubleInfo{}
-	case CONSTANT_Utf8:
+	case CONSTANTUtf8:
 		return &ConstantUtf8Info{}
-	case CONSTANT_String:
+	case CONSTANTString:
 		return &ConstantStringInfo{cp: cp}
-	case CONSTANT_Class:
+	case CONSTANTClass:
 		return &ConstantClassInfo{cp: cp}
-	case CONSTANT_Fieldref:
-		return &ConstatFieldInfo{ConstantMemberrefInfo{cp: cp}}
-	case CONSTANT_Methodref:
+	case CONSTANTFieldref:
+		return &ConstantFieldInfo{ConstantMemberrefInfo{cp: cp}}
+	case CONSTANTMethodref:
 		return &ConstantMethodrefInfo{ConstantMemberrefInfo{cp: cp}}
-	case CONSTANT_InterfaceMethodref:
-		return &ConstantInterfaceMethodrefInfo{ConstantMemberInfo{cp: cp}}
-	case CONSTANT_NameAndType:
+	case CONSTANTInterfaceMethodref:
+		return &ConstantInterfaceMethodrefInfo{ConstantMemberrefInfo{cp: cp}}
+	case CONSTANTNameAndType:
 		return &ConstantNameAndTypeInfo{}
-	case CONSTANT_MethodType:
+	case CONSTANTMethodType:
 		return &ConstantMethodTypeInfo{}
-	case CONSTANT_MethodHandle:
+	case CONSTANTMethodHandle:
 		return &ConstantMethodHandleInfo{}
-	case CONSTANT_InvokeDynamic:
+	case CONSTANTInvokeDynamic:
 		return &ConstantInvokeDynamicInfo{}
 	default:
 		panic("java.lang.ClassFormatError: constant pool tag!")
@@ -51,7 +52,7 @@ func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
 
 func readConstantPool(reader *ClassReader) ConstantPool {
 	cpCount := int(reader.readUint16())
-	cp := make([]ConstantPool, cpCount)
+	cp := make([]ConstantInfo, cpCount)
 	for i := 1; i < cpCount; i++ {
 		cp[i] = readConstantInfo(reader, cp)
 		switch cp[i].(type) {

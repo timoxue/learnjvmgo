@@ -4,38 +4,42 @@ import (
 	"math"
 )
 
+//ConstantIntegerInfo #
 type ConstantIntegerInfo struct {
 	val int32
 }
 
+//ConstantFloatInfo #
 type ConstantFloatInfo struct {
 	val float32
 }
 
+//ConstantLongInfo #
 type ConstantLongInfo struct {
 	val int64
 }
 
+//ConstantDoubleInfo #
 type ConstantDoubleInfo struct {
 	val float64
 }
 
-func (this *ConstantIntegerInfo) readInfo(reader *ClassReader) {
+func (cii *ConstantIntegerInfo) readInfo(reader *ClassReader) {
 	bytes := reader.readUnit32()
-	this.val = int32(bytes)
+	cii.val = int32(bytes)
 }
 
-func (this *ConstantFloatInfo) readInfo(reader *ClassReader) {
+func (cii *ConstantFloatInfo) readInfo(reader *ClassReader) {
 	bytes := reader.readUnit32()
-	this.val = math.Float32frombits(bytes)
+	cii.val = math.Float32frombits(bytes)
 }
 
-func (this *ConstantLongInfo) readInfo(reader *ClassReader) {
+func (cii *ConstantLongInfo) readInfo(reader *ClassReader) {
 	bytes := reader.readUint64()
-	this.val = int64(bytes)
+	cii.val = int64(bytes)
 }
 
-func (this *ConstantDoubleInfo) readInfo(reader *ClassReader) {
-	bytes := reader.readUint65()
-	this.val = math.Float64frombits(bytes)
+func (cii *ConstantDoubleInfo) readInfo(reader *ClassReader) {
+	bytes := reader.readUint64()
+	cii.val = math.Float64frombits(bytes)
 }

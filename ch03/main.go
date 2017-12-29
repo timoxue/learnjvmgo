@@ -20,7 +20,7 @@ func main() {
 
 func startJVM(cmd *Cmd) {
 	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
-	fmt.Printf("classpath:%v class:%v args:%v\n", cp, cmd.class, cmd.args)
+	//fmt.Printf("classpath:%v class:%v args:%v\n", cp, cmd.class, cmd.args)
 	className := strings.Replace(cmd.class, ".", "/", -1)
 	cf := loadClass(className, cp)
 	fmt.Println(cmd.class)
@@ -46,7 +46,7 @@ func printClassInfo(cf *classfile.ClassFile) {
 	fmt.Printf("this class: %v\n", cf.ClassName())
 	fmt.Printf("super class: %v\n", cf.SuperClassName())
 	fmt.Printf("interfaces : %v\n", cf.InterfaceNames())
-	fmt.Printf("fields count: %v\n", len(cf.Fields())
+	fmt.Printf("fields count: %v\n", len(cf.Fields()))
 	for _, f := range cf.Fields() {
 		fmt.Printf(" %s\n", f.Name())
 	}

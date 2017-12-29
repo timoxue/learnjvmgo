@@ -1,11 +1,12 @@
 package classfile
 
+//UnparsedAttribute #
 type UnparsedAttribute struct {
 	name   string
 	length uint32
 	info   []byte
 }
 
-func (this *UnparsedAttribute) readInfo(reader *ClassReader) {
-	this.info = reader.readBytes(this.length)
+func (ua *UnparsedAttribute) readInfo(reader *ClassReader) {
+	ua.info = reader.readBytes(ua.length)
 }

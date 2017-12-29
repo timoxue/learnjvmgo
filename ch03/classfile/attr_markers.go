@@ -1,16 +1,19 @@
 package classfile
 
+//DeprecatedAttribute #
 type DeprecatedAttribute struct {
 	MarkerAttribute
 }
 
+//SyntheticAttribute #
 type SyntheticAttribute struct {
 	MarkerAttribute
 }
 
+//MarkerAttribute #
 type MarkerAttribute struct {
 }
 
-func (this *MarkerAttribute) readInfo(reader *ClassReader) {
+func (ma *MarkerAttribute) readInfo(reader *ClassReader) {
 	//read nothing
 }

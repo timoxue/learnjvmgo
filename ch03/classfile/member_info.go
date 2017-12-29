@@ -1,6 +1,6 @@
 package classfile
 
-//MemeberInfo #
+//MemberInfo #
 type MemberInfo struct {
 	cp              ConstantPool
 	accessFlag      uint16
@@ -28,10 +28,12 @@ func readMember(reader *ClassReader, cp ConstantPool) *MemberInfo {
 	}
 }
 
+//Name #
 func (memberInfo *MemberInfo) Name() string {
 	return memberInfo.cp.getUtf8(memberInfo.nameIndex)
 }
 
+//Descriptor #
 func (memberInfo *MemberInfo) Descriptor() string {
 	return memberInfo.cp.getUtf8(memberInfo.descriptorIndex)
 }
