@@ -40,6 +40,7 @@ func (cf *ClassFile) read(reader *ClassReader) {
 	cf.constantPool = readConstantPool(reader)
 	cf.accessFlags = reader.readUint16()
 	cf.thisClass = reader.readUint16()
+	cf.superClass = reader.readUint16()
 	cf.interfaces = reader.readUint16s()
 	cf.fields = readMembers(reader, cf.constantPool)
 	cf.methods = readMembers(reader, cf.constantPool)
