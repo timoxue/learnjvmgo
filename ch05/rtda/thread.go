@@ -27,3 +27,18 @@ func (thread *Thread) PopFrame() *Frame {
 func (thread *Thread) CurrentFrame() *Frame {
 	return thread.stack.top()
 }
+
+//NewFrame #
+func (thread *Thread) NewFrame(maxLocals, maxStack uint) *Frame {
+	return newFrame(thread, maxLocals, maxStack)
+}
+
+//PC #
+func (thread *Thread) PC() int {
+	return thread.pc
+}
+
+//SetPC #
+func (thread *Thread) SetPC(pc int) {
+	thread.pc = pc
+}

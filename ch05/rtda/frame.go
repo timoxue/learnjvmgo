@@ -5,11 +5,14 @@ type Frame struct {
 	lower        *Frame
 	localVars    LocalVars
 	operandStack *OperandStack
+	thread       *Thread
+	nextPC       int
 }
 
 //NewFrame #
-func NewFrame(maxLocals, maxStack uint) *Frame {
+func newFrame(thread *Thread, maxLocals, maxStack uint) *Frame {
 	return &Frame{
+		thread:       thread,
 		localVars:    newLocalVars(maxLocals),
 		operandStack: newOperandStack(maxStack),
 	}
@@ -23,4 +26,19 @@ func (frame *Frame) LocalVars() LocalVars {
 //OperandStack #
 func (frame *Frame) OperandStack() *OperandStack {
 	return frame.operandStack
+}
+
+//Thread #
+func (frame *Frame) Thread() *Thread {
+	return frame.thread
+}
+
+//NextPC #
+func (frame *Frame) NextPC() int {
+	return frame.nextPC
+}
+
+//SetNextPC #
+func (frame *Frame) SetNextPC(nextPC int) {
+	frame.nextPC = nextPC
 }
